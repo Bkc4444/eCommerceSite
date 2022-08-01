@@ -14,5 +14,7 @@ namespace eCommerceSite.Data
         }
 
         public DbSet<Music> Musics { get; set; }
+
+
     }
 }
