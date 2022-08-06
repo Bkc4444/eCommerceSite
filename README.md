@@ -6,7 +6,7 @@ In this project we will be learning about
 - Model Binding
 - CRUD functionality 
 - Login and registration
--Styling through Bootstrap
+- Styling through Bootstrap
 
 To run this project you will need
 - ASP.NET Core
