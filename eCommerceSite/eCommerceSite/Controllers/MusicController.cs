@@ -1,6 +1,7 @@
 ﻿using eCommerceSite.Data;
 using eCommerceSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceSite.Controllers
 {
@@ -11,6 +12,21 @@ namespace eCommerceSite.Controllers
         public MusicController(MusicStoreContext context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            //get all the games from the database
+            List<Music> musicList = await _context.Musics.ToListAsync();
+
+            //or
+
+            //List<Music> musicList = await (from music in _context.Musics
+                                          //select music).ToListAsync();
+
+            // show then on the page
+            return View(musicList);
+
         }
 
         [HttpGet]
