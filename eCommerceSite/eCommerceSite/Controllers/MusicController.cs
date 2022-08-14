@@ -19,13 +19,15 @@ namespace eCommerceSite.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Music m)
+        public async Task<IActionResult> Create(Music m) //async then adding Task<IActionResult> will help make the load go much faster
         {
             if (ModelState.IsValid)
             {
                 // add to the database
-                _context.Musics.Add(m); // prepares insert
-                _context.SaveChanges();// Executes pending insert
+                _context.Musics.Add(m);             // prepares insert
+
+                // When using async this needs to have an await at the front and add Async at the end of save changes
+                await _context.SaveChangesAsync();  // Executes pending insert
 
                 //show success message on page
                 ViewData["Message"] = $"{m.Title} was added successfully!";
