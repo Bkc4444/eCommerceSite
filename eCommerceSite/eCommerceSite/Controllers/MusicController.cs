@@ -64,5 +64,18 @@ namespace eCommerceSite.Controllers
 
             return View(musicToEdit);// with this variable it can pull up the game to edit that was chosen
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Music musicModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Musics.Update(musicModel);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            return View(musicModel);
+        }
     }
 }

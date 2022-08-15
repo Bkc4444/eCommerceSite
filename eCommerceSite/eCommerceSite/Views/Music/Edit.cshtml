@@ -1,7 +1,7 @@
 ﻿@model Music
 
 @{
-    ViewData["Title"] = "Edit" + Model.Title;//this is so we know what game we're editiing
+    ViewData["Title"] = "Edit" + Model.Title;//this is so we know what game we're editing
 }
 
 <h1>Edit @Model.Title</h1>
@@ -12,7 +12,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for"MusicID" />
+            <input type="hidden" asp-for="MusicID" />
 
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
