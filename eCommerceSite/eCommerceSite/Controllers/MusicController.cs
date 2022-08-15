@@ -73,6 +73,7 @@ namespace eCommerceSite.Controllers
                 _context.Musics.Update(musicModel);
                 await _context.SaveChangesAsync();
 
+                TempData["Message"] = $"{musicModel.Title} was updated successfully!";//this is what is said when the update is completed
                 return RedirectToAction("Index");
             }
             return View(musicModel);
