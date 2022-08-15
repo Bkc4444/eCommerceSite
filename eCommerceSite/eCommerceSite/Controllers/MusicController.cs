@@ -52,5 +52,17 @@ namespace eCommerceSite.Controllers
 
             return View(m);
         }
+
+        public async Task<IActionResult> Edit(int id)//this in id is referencing whats in the index.cshtml asp-route-id="@item.MusicID" is what this is referencing
+        {
+            Music? musicToEdit = await _context.Musics.FindAsync(id);
+
+            if(musicToEdit == null)
+            {
+                return NotFound();
+            }
+
+            return View(musicToEdit);// with this variable it can pull up the game to edit that was chosen
+        }
     }
 }
