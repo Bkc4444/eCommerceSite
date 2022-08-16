@@ -52,5 +52,16 @@ namespace eCommerceSite.Controllers
 
             return View(m);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            Music? musicToDelete = await _context.Musics.FindAsync(id);
+
+            if (musicToDelete == null)
+            {
+                return NotFound(); // 404 code error
+            }
+            return View(musicToDelete);
+        }
     }
 }
