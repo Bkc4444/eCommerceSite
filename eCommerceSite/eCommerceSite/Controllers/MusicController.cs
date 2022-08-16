@@ -87,7 +87,31 @@ namespace eCommerceSite.Controllers
             {
                 return NotFound(); // 404 code error
             }
+
             return View(musicToDelete);
+        }
+
+        // this is because two functions cant be named the same with the same parameters but it also needs to be named the same thing.
+        // So the function is names DeleteConfirmed but it will show up as Delete because of the code below
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Music musicToDelete = await _context.Musics.FindAsync(id);
+
+            if(musicToDelete != null)
+            {
+                //remove the data
+                _context.Musics.Remove(musicToDelete);
+                //save the data
+                await _context.SaveChangesAsync();
+                // message that will display when data is deleted
+                TempData["Message"] = musicToDelete.Title + "was deleted successfully";
+                //send you back to the index
+                return RedirectToAction("Index");
+            }
+
+            TempData["Message"] = "This song was already deleted";
+            return RedirectToAction("Index");
         }
     }
 }
