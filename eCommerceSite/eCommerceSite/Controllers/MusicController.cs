@@ -113,5 +113,16 @@ namespace eCommerceSite.Controllers
             TempData["Message"] = "This song was already deleted";
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Details(int id)
+        {
+            Music? musicDetails = await _context.Musics.FindAsync(id);
+            
+            if(musicDetails == null)
+            {
+                return NotFound();
+            }
+            
+            return View(musicDetails);
+        }
     }
 }
