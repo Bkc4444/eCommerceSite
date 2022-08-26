@@ -13,8 +13,9 @@ namespace eCommerceSite.Data
         {
         }
 
+        //This is adding the Music class to the database
         public DbSet<Music> Musics { get; set; }
 
-
+        public DbSet<Member> Members { get; set; }
     }
 }
