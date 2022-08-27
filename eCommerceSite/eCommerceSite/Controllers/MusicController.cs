@@ -96,7 +96,7 @@ namespace eCommerceSite.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Music musicToDelete = await _context.Musics.FindAsync(id);
+            Music? musicToDelete = await _context.Musics.FindAsync(id);
 
             if(musicToDelete != null)
             {
