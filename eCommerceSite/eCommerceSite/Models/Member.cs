@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace eCommerceSite.Models
 {
@@ -30,11 +31,13 @@ namespace eCommerceSite.Models
 
         [Required]
         [StringLength(75, MinimumLength = 6)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
         [Compare(nameof(Password))]
         [Display(Name = "Confirm Password")]
+        [DataType(DataType.Password)]
         public string ConformPassword { get; set; }
     }
 }
