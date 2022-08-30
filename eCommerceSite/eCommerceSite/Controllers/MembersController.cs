@@ -40,5 +40,32 @@ namespace eCommerceSite.Controllers
 
             return View(regModel);
         }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel loginModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // Check DB for credentials
+                Member? m = (from member in _context.Members
+                           where member.Email == loginModel.Email &&
+                                 member.Password == loginModel.Password
+                           select member).SingleOrDefault();
+
+                // if exists send to homepage
+                if (m != null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Email or password was not found. Please try again!");
+            }
+            // Return page in for record is found, or ModelState is invalid
+            return View(loginModel);
+        }
     }
 }
