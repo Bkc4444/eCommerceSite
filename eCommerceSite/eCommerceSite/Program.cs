@@ -11,6 +11,16 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
+// Allow session access views
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//these do the same thing
+builder.Services.AddHttpContextAccessor();
+
+// This needs to be added in to help HttpContext work in the memberscontroller
+// Add Session 1 of 2
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +37,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Add Session part 2 of 2
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

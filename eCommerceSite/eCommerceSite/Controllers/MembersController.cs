@@ -60,6 +60,7 @@ namespace eCommerceSite.Controllers
                 // if exists send to homepage
                 if (m != null)
                 {
+                    HttpContext.Session.SetString("Email", loginModel.Email);
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError(string.Empty, "Email or password was not found. Please try again!");
