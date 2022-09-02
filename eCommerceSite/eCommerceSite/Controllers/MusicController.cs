@@ -21,6 +21,12 @@ namespace eCommerceSite.Controllers
 
             //This is the same as the commented out code below
             int currPage = id ?? 1; // Set surrPage to id if it has a value, otherwise use 1
+
+            int totalNumOfProducts = await _context.Musics.CountAsync();
+            double maxNumPages = Math.Ceiling((double)totalNumOfProducts / NumSongsToDisplayPerPage);
+            int lastPage = Convert.ToInt32(maxNumPages); // rounding pages up, to the next whole page
+
+
             /*
             if (id.HasValue)
             {
@@ -42,7 +48,8 @@ namespace eCommerceSite.Controllers
             //                      .Take(NumSongsToDisplayPerPage)
             //                      .ToListAsync();
             // show then on the page
-            return View(musicList);
+            MusicCatalogViewModel catalogModel = new(musicList, lastPage, currPage);
+            return View(catalogModel);
 
         }
 
