@@ -14,16 +14,33 @@ namespace eCommerceSite.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)//this is going to be a page number. This also should be named id
         {
+            const int NumSongsToDisplayPerPage = 3;
+            const int PageOffSet = 1; // Need a page offset to use current page and figure out, num games to skip
+
+            //This is the same as the commented out code below
+            int currPage = id ?? 1; // Set surrPage to id if it has a value, otherwise use 1
+            /*
+            if (id.HasValue)
+            {
+                currPage = id.Value;
+            }
+            else
+            {
+                currPage = 1;
+            }*/
+
             //get all the games from the database
-            List<Music> musicList = await _context.Musics.ToListAsync();
-
+            List<Music> musicList = await _context.Musics
+                                    .Skip(NumSongsToDisplayPerPage * (currPage - PageOffSet))
+                                    .Take(NumSongsToDisplayPerPage)
+                                    .ToListAsync();
             //or
-
-            //List<Music> musicList = await (from music in _context.Musics
-                                          //select music).ToListAsync();
-
+            //List<Music> musicList = await(from music in _context.Musics select music)
+            //                      .Skip(NumSongsToDisplayPerPage * (currPage - PageOffSet))
+            //                      .Take(NumSongsToDisplayPerPage)
+            //                      .ToListAsync();
             // show then on the page
             return View(musicList);
 
