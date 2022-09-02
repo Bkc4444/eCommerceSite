@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Music>
+﻿@model MusicCatalogViewModel
 
 @{
     ViewData["Title"] = "Music Catalog";
@@ -16,39 +16,69 @@
 <p>
     <a asp-action="Create" asp-controller="Music">Create Song</a>
 </p>
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MusicID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (Music item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MusicID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.MusicID">Edit</a>
-                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.MusicID">Details</a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.MusicID">Delete</a>
-            </td>
-        </tr>
+@if (Model.Songs.Count() != 0) //This is to help display page numbers
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs[0].MusicID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs[0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs[0].Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Music item in Model.Songs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MusicID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.MusicID">Edit</a>
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.MusicID">Details</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.MusicID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else 
+{
+    <h2>There are no games for this page</h2>
+}
+
+<nav aria-label="Music Catalog Pages">
+    <ul class="pagination">
+    @*This is for the page numbers at the bottom of the screen*@
+    @for (int i = 1; i <= Model.LastPage; i++)
+    {
+
+        if (i == Model.CurrentPage)
+            {
+                <li class="page-item active">
+                    <a class="page-link">@i</a>
+                </li>
+            }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-id="@i">@i</a>
+            </li>
+        }
+    }
+    </ul>
+</nav>
